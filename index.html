@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TÜRK: BOZKIRIN HÂKİMİ</title>
+<style>
+body{margin:0;background:#17251b;color:white;font-family:Arial;text-align:center}
+header{background:#304832;padding:20px}
+.panel{background:#304532;margin:12px;padding:15px;border-radius:12px}
+button{background:#bd8b43;color:black;padding:12px;margin:5px;border:0;border-radius:8px;font-weight:bold}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px}
+.stat{background:#1d2c20;padding:12px;border-radius:8px}
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tile{background:#526b42;padding:15px 2px;border-radius:8px;font-size:23px}
+small{display:block;font-size:10px}
+</style>
+</head>
+<body>
+<header>
+<h2>⚔️ TÜRK: BOZKIRIN HÂKİMİ</h2>
+Bir Türk devleti kur!
+</header>
+
+<div class="panel">
+<h3>👑 Türk Devleti</h3>
+<div id="day">1. Gün</div>
+</div>
+
+<div class="stats">
+<div class="stat">🪵 Odun<br><b id="wood">100</b></div>
+<div class="stat">🌾 Yiyecek<br><b id="food">100</b></div>
+<div class="stat">⛓️ Demir<br><b id="iron">50</b></div>
+<div class="stat">🪙 Altın<br><b id="gold">100</b></div>
+<div class="stat">⚔️ Asker<br><b id="army">10</b></div>
+<div class="stat">🏗️ Bina<br><b id="buildings">1</b></div>
+</div>
+
+<div class="panel">
+<h3>🗺️ BOZKIR HARİTASI</h3>
+<div class="map">
+<div class="tile">🌲<small>Orman</small></div>
+<div class="tile">⛰️<small>Dağ</small></div>
+<div class="tile">🐎<small>Otlak</small></div>
+<div class="tile">🏰<small>Düşman</small></div>
+<div class="tile">🌾<small>Tarla</small></div>
+<div class="tile">🏕️<small>Senin Oban</small></div>
+<div class="tile">🏘️<small>Bot Köyü</small></div>
+<div class="tile">🌳<small>Orman</small></div>
+</div>
+</div>
+
+<div class="panel">
+<h3>🛠️ KAYNAK TOPLA</h3>
+<button onclick="gather('wood')">🪵 Odun</button>
+<button onclick="gather('food')">🌾 Yiyecek</button>
+<button onclick="gather('iron')">⛓️ Demir</button>
+<button onclick="gather('gold')">🪙 Altın</button>
+</div>
+
+<div class="panel">
+<h3>🏗️ BİNA İNŞA ET</h3>
+<button onclick="build('Çiftlik',30,0,0)">🌾 Çiftlik</button>
+<button onclick="build('Kışla',40,20,0)">⚔️ Kışla</button>
+<button onclick="build('Ahır',50,10,5)">🐎 Ahır</button>
+<button onclick="build('Demirci',35,0,15)">🔨 Demirci</button>
+<button onclick="build('Kule',60,0,10)">🗼 Kule</button>
+</div>
+
+<div class="panel">
+<h3>⚔️ ORDU KUR</h3>
+<button onclick="recruit('Piyade',10,5,0)">🗡️ Piyade</button>
+<button onclick="recruit('Okçu',15,8,0)">🏹 Okçu</button>
+<button onclick="recruit('Atlı',20,10,5)">🐎 Atlı</button>
+</div>
+
+<div class="panel">
+<h3>🏰 SAVAŞ</h3>
+<button onclick="attack()">Düşman Kalesine Saldır</button>
+<button onclick="nextDay()">Sonraki Gün</button>
+</div>
+
+<div class="panel">
+<h3>📜 DEVLET GÜNLÜĞÜ</h3>
+<div id="log">Türk devleti kuruldu!</div>
+</div>
+<script>
+let wood=100;
+let food=100;
+let iron=50;
+let gold=100;
+let army=10;
+let buildings=1;
+let day=1;
+let farms=0;
+let enemy=25;
+let conquered=false;
+
+function update(){
+document.getElementById("wood").textContent=wood;
+document.getElementById("food").textContent=food;
+document.getElementById("iron").textContent=iron;
+document.getElementById("gold").textContent=gold;
+document.getElementById("army").textContent=army;
+document.getElementById("buildings").textContent=buildings;
+document.getElementById("day").textContent=day+". Gün";
+}
+
+function log(message){
+let box=document.getElementById("log");
+box.innerHTML=message+"<br>"+box.innerHTML;
+}
+
+function gather(type){
+if(type==="wood"){wood+=20;log("20 odun topladın!");}
+if(type==="food"){food+=20;log("20 yiyecek topladın!");}
+if(type==="iron"){iron+=10;log("10 demir çıkardın!");}
+if(type==="gold"){gold+=10;log("10 altın kazandın!");}
+update();
+}
+
+function build(name,w,i,g){
+if(wood<w||iron<i||gold<g){
+log("Yeterli kaynağın yok!");
+return;
+}
+wood-=w;
+iron-=i;
+gold-=g;
+buildings++;
+if(name==="Çiftlik"){farms++;}
+log(name+" inşa edildi!");
+update();
+}
+
+function recruit(name,f,w,i){
+if(food<f||wood<w||iron<i){
+log("Asker toplamak için kaynağın yetersiz!");
+return;
+}
+food-=f;
+wood-=w;
+iron-=i;
+army+=5;
+log(name+" birliği kuruldu. 5 asker katıldı!");
+update();
+}
+
+function attack(){
+if(conquered){
+log("Düşman kalesi zaten senin!");
+return;
+}
+if(army<enemy){
+army=Math.max(0,army-5);
+log("Saldırı başarısız! 5 asker kaybettin.");
+}else{
+army-=5;
+gold+=100;
+conquered=true;
+log("ZAFER! Düşman kalesini fethettin! 100 altın kazandın!");
+}
+update();
+}
+
+function nextDay(){
+day++;
+food+=farms*10;
+food-=Math.ceil(army/10);
+gold+=5;
+enemy+=2;
+if(food<0){
+food=0;
+army=Math.max(0,army-2);
+log("Açlık! 2 asker kaybettin.");
+}
+log("Yeni gün başladı. Düşman devleti güçleniyor!");
+update();
+}
+
+update();
+</script>
+</body>
+</html>
