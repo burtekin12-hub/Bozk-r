@@ -1,0 +1,90 @@
+
+<style>
+#turk3d {
+  background:linear-gradient(#192c25,#101b17);
+  color:#f5e8c8;padding:14px;border-radius:15px;
+  margin:15px 0;overflow:hidden;
+}
+#turk3d h2{text-align:center;color:#e9bd67}
+#turk3d .world {
+  position:relative;width:100%;height:390px;
+  overflow:hidden;border-radius:12px;
+  background:linear-gradient(145deg,#66834b,#294b35 65%,#172f28);
+  perspective:700px;
+}
+#turk3d .terrain {
+  position:absolute;width:145%;height:115%;
+  left:-22%;top:-5%;transform:rotateX(52deg) rotateZ(-25deg);
+  background-color:#587b42;
+  background-image:
+  radial-gradient(ellipse,#78944c 0 12%,transparent 13%),
+  radial-gradient(ellipse,#345c36 0 10%,transparent 11%),
+  repeating-linear-gradient(35deg,transparent 0 35px,#78904b 36px 39px);
+  background-size:110px 90px,140px 120px,100% 100%;
+}
+#turk3d .river {
+  position:absolute;width:150%;height:32px;left:-20%;top:48%;
+  background:linear-gradient(#9bd0d0,#3b91a0,#b5e2dc);
+  transform:rotate(-28deg);border-radius:50%;
+  box-shadow:0 0 15px #8acbd1;
+}
+#turk3d .mountain {
+  position:absolute;width:0;height:0;
+  border-left:35px solid transparent;
+  border-right:35px solid transparent;
+  border-bottom:65px solid #65716a;
+  filter:drop-shadow(0 9px 2px #263a2b);
+}
+#turk3d .mountain:after {
+  content:"";position:absolute;left:-12px;top:23px;
+  border-left:12px solid transparent;
+  border-right:12px solid transparent;
+  border-bottom:23px solid #e1e2d7;
+}
+#turk3d .place {
+  position:absolute;z-index:3;text-align:center;
+  font-size:27px;filter:drop-shadow(2px 4px 2px #18251c);
+}
+#turk3d .place span {
+  display:block;font-size:10px;background:#17251de8;
+  color:white;border-radius:5px;padding:3px;
+}
+#turk3d .village{left:43%;top:48%}
+#turk3d .castle{left:72%;top:23%}
+#turk3d .enemy{left:12%;top:25%}
+#turk3d .forest{left:20%;top:65%}
+#turk3d .enemy2{left:78%;top:68%}
+#turk3d button {
+  background:#a87c39;color:white;border:0;
+  padding:11px;border-radius:8px;margin:4px;
+  font-weight:bold;
+}
+#turk3d .info{padding:9px;background:#263b2c;border-radius:8px;margin-top:10px}
+</style>
+
+<div id="turk3d">
+<h2>🐺 TÜRK BOZKIRI</h2>
+<div class="world">
+ <div class="terrain"></div>
+ <div class="river"></div>
+ <div class="mountain" style="left:12%;top:8%"></div>
+ <div class="mountain" style="left:29%;top:15%"></div>
+ <div class="mountain" style="left:60%;top:5%"></div>
+ <div class="mountain" style="left:87%;top:43%"></div>
+ <div class="place enemy">🏰<span>Kuzey Hanlığı</span></div>
+ <div class="place village">🏕️<span>Türk Devletin</span></div>
+ <div class="place castle">🏯<span>Doğu Kalesi</span></div>
+ <div class="place forest">🌲<span>Orman</span></div>
+ <div class="place enemy2">🏰<span>Güney Beyliği</span></div>
+</div>
+<div class="info">
+  🪙 Altın: <b id="m3altin">500</b> |
+  🛡️ Asker: <b id="m3asker">100</b>
+</div>
+<h3>🗺️ Harita İşlemleri</h3>
+<button onclick="document.getElementById('m3mesaj').textContent='Haritada Türk yurdunu seçtin!'">Yurdumu Seç</button>
+<button onclick="document.getElementById('m3mesaj').textContent='Kuzey Hanlığına keşif gönderildi!'">Keşif Gönder</button>
+<button onclick="document.getElementById('m3mesaj').textContent='Ordun kaleye doğru ilerliyor!'">Kaleye Yürü</button>
+<p id="m3mesaj">Bozkırda hüküm sürmeye hazır mısın Bey?</p>
+</div>
+</body>
